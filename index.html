@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+    
+    <head>
+        
+        <title>Draw Stuff</title>
+        
+        <meta charset="UTF-8">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" type="text/css" href="style.css">
+        
+        <script src="tools.js"> </script>
+        <script src="paint.js"> </script>
+        <script src="main.js"> </script>
+        
+    </head>
+    <body>
+        
+        <canvas id="main_canvas"> 
+        </canvas>
+        
+        <header>
+            <span id="ui_controls">
+                <img id="save" class="steps" src="icons/save.png"/>
+                <img id="undo" class="steps" src="icons/undo.png"/> 
+                <img id="redo" class="steps" src="icons/redo.png"/> 
+                <img id="clear"  class="steps" src="icons/clear.png"/> 
+            </span>
+            <span id="tools">
+            </span>
+        </header>
+        
+        <nav>  
+            
+            <canvas id="demo_canvas" height="100" width="100">
+            </canvas>
+                        
+            <div>  
+                <button id="minus" class="demo"> - </button>
+                <button id="plus"  class="demo"> + </button>
+            </div>
+            
+        </nav>
+        
+        <div id="saved">
+            
+            <p id="thumbNails"> Thumbnails (click them to download): </p>
+            
+        </div>
+        
+        <!--
+        <div id="array">
+            
+        </div>
+        -->
+         
+    </body>
+</html>

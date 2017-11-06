@@ -1,0 +1,97 @@
+
+html, body
+{
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
+header
+{
+    position: fixed;
+    top:0;
+    left: 0;
+    background-color: beige;
+    height: 40px;
+    width: 100%;
+}
+
+#ui_controls {
+    position: absolute;
+    left: 2%;
+    height: 35px;
+}
+
+#ui_controls img {
+    position: relative;
+    margin-left: 7px;
+}
+
+#ui_controls img:hover {
+    filter: brightness(100);
+}
+
+#save {
+    width: 40px;
+}
+
+#undo, #redo {
+    width: 25px;
+    top: -5px;
+}
+
+#clear {
+    width: 32px;
+    top: -4px;
+}
+
+#tools {
+    position: absolute;
+    left: 18%;
+}
+
+#main_canvas
+{
+    position: fixed;
+    top:0;
+    left:0;
+}
+
+
+nav
+{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+
+/*
+
+#array
+{
+    position: absolute;
+    top: 700px;
+}
+*/
+
+
+
+#saved
+{
+    position: absolute;
+    top: 700px;
+    left: 20px;
+    font-size: 20px;
+    font-family: monospace;
+}
+
+/*
+img
+{
+    width: 140px;
+    height: 80px;
+    margin: 20px;
+}
+*/
+

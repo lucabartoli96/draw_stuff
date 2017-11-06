@@ -5,8 +5,6 @@ var mousedown, drag, show;
 
 
 window.onload = function() {
-    
-    tools();
-    paint();
-    
+    init_module_tools();
+    init_module_paint();
 };

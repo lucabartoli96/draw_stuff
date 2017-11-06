@@ -1,6 +1,6 @@
 
 
-function paint() {
+function init_module_paint() {
 
     var 
     canvas = document.getElementById("main_canvas"),

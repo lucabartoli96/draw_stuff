@@ -1,6 +1,6 @@
 
 
-function tools() {
+function init_module_tools() {
 
     var BUTTON_RADIUS = 10;
     

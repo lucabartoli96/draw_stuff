@@ -8,7 +8,9 @@ function init_module_tools(draw_stuff) {
         context = canvas.getContext("2d"),
         demo = document.getElementById("demo_canvas"),
         demo_context = demo.getContext("2d"),
-        radius = 10;
+        radius = 10,
+        canvasLeft = canvas.getBoundingClientRect().left,
+        canvasTop = canvas.getBoundingClientRect().top;
         
     var latter_x, latter_y;
     
@@ -61,11 +63,11 @@ function init_module_tools(draw_stuff) {
         
     }
     
-
+    
     function rubber(click) {
-
-        var x = document.body.scrollLeft + click.clientX;
-        var y = document.body.scrollTop + click.clientY;
+        
+        var x = document.body.scrollLeft + click.clientX - canvasLeft;
+        var y = document.body.scrollTop + click.clientY - canvasTop;
 
         context.clearRect(x-radius,y-radius, 2*radius, 2*radius);
 
@@ -73,8 +75,8 @@ function init_module_tools(draw_stuff) {
 
     function brush(click) {  
 
-        var x = document.body.scrollLeft + click.clientX;
-        var y = document.body.scrollTop + click.clientY;
+        var x = document.body.scrollLeft + click.clientX - canvasLeft;
+        var y = document.body.scrollTop + click.clientY - canvasTop;
 
         latter_x = x;
         latter_y = y;
@@ -87,8 +89,8 @@ function init_module_tools(draw_stuff) {
 
     function marker(click) {    
 
-        var x = document.body.scrollLeft + click.clientX;
-        var y = document.body.scrollTop + click.clientY;
+        var x = document.body.scrollLeft + click.clientX  - canvasLeft;
+        var y = document.body.scrollTop + click.clientY  -  canvasTop;
 
         latter_x = x;
         latter_y = y;
@@ -102,8 +104,8 @@ function init_module_tools(draw_stuff) {
 
     function pen(click) {
 
-        var x = document.body.scrollLeft + click.clientX;
-        var y = document.body.scrollTop + click.clientY;
+        var x = document.body.scrollLeft + click.clientX  - canvasLeft;
+        var y = document.body.scrollTop + click.clientY  -  canvasTop;
 
         latter_x = x;
         latter_y = y;
@@ -114,8 +116,8 @@ function init_module_tools(draw_stuff) {
 
     function brushDragged(click) {
 
-        var x = document.body.scrollLeft + click.clientX;
-        var y = document.body.scrollTop + click.clientY;
+        var x = document.body.scrollLeft + click.clientX  - canvasLeft;
+        var y = document.body.scrollTop + click.clientY  -  canvasTop;
 
 
         var line = context.lineWidth;
@@ -136,8 +138,8 @@ function init_module_tools(draw_stuff) {
 
     function markerDragged(click) {
 
-        var x = document.body.scrollLeft + click.clientX;
-        var y = document.body.scrollTop + click.clientY;
+        var x = document.body.scrollLeft + click.clientX  - canvasLeft;
+        var y = document.body.scrollTop + click.clientY  -  canvasTop;
 
         context.beginPath();
         context.moveTo(latter_x + radius/3, latter_y - radius/3);
@@ -154,8 +156,8 @@ function init_module_tools(draw_stuff) {
 
     function penDragged(click) {
 
-        var x = document.body.scrollLeft + click.clientX;
-        var y = document.body.scrollTop + click.clientY;
+        var x = document.body.scrollLeft + click.clientX  - canvasLeft;
+        var y = document.body.scrollTop + click.clientY  -  canvasTop;
 
         var a = x, b = y;
 
@@ -297,38 +299,27 @@ function init_module_tools(draw_stuff) {
 
     };
     
-    /*
+    
     function update() {
     
-        var style = "rgb(" + color + ")";
+        var style = "rgb(" + draw_stuff["color"] + ")";
         context.fillStyle = style;
         demo_context.fillStyle = style;
         context.strokeStyle = style;
         demo_context.strokeStyle = style;
     
     }
-    */
+    
     
     (function() {
         
-        var changeRadius = function (increment) {
-            if (radius <= 50 && radius >= 5) {
-                radius += increment; 
-                show();
+        document.getElementsByName("radius")[0]
+        .addEventListener("input",
+            function(evt) {
+                radius = evt.target.value;
+                draw_stuff["show"]();
             }
-        }
-    
-        document.getElementById("plus")
-        .addEventListener("click", 
-            function() {
-                changeRadius(1);
-        });
-
-        document.getElementById("minus")
-        .addEventListener("click", 
-            function() {
-                changeRadius(-1);
-        });
+        );
         
         
         var changeTool = function(evt) {
@@ -340,7 +331,7 @@ function init_module_tools(draw_stuff) {
                 draw_stuff[attr] = tool[attr];
             }
             
-            show();
+            draw_stuff["show"]();
             
         };
         
@@ -351,18 +342,16 @@ function init_module_tools(draw_stuff) {
             button.id = tool_name;
             button.height = button.width = 35;
             tools_span.appendChild(button);
-            tools[tool_name]["canvas"] = button;
-            tools[tool_name]["button"](); 
-            
             button.addEventListener("click", changeTool);
         }
-        
         
         tool = tools["brush"];
         
         for (var attr in tool) {
             draw_stuff[attr] = tool[attr];
         }
+        
+        buttons();
         
     })();
     

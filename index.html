@@ -10,7 +10,7 @@
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="main.css">
         
         <script src="tools.js"> </script>
         <script src="draw.js"> </script>
@@ -33,14 +33,16 @@
             </span>
         </header>
         
+        <section>
+        </section>
+        
         <nav>  
             
             <canvas id="demo_canvas" height="100" width="100">
             </canvas>
                         
-            <div>  
-                <button id="minus" class="demo"> - </button>
-                <button id="plus"  class="demo"> + </button>
+            <div id="slidecontainer">
+                <input name="radius" type="range" min="5" max="50" value="10">
             </div>
             
         </nav>

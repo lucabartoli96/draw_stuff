@@ -1,6 +1,6 @@
 
 
-function init_module_tools() {
+function init_module_tools(draw_stuff) {
 
     var BUTTON_RADIUS = 10;
     
@@ -13,72 +13,55 @@ function init_module_tools() {
     var latter_x, latter_y;
     
     
-    function rubberButton() {
+    function buttons() {
         
-        var button = tools["rubber"]["canvas"];
-        var ctx = button.getContext("2d");
+        var 
+        size = document.getElementById("rubber"),
+        x =  size.width/2,
+        y =  size.height/2;
         
-        var x =  button.width/2;
-        var y =  button.height/2;
-
-        ctx.clearRect(0, 0, button.width, button.height);
-
-        ctx.fillStyle = "rgba(255,255,255,1)";
-        ctx.fillRect(x-BUTTON_RADIUS, y-BUTTON_RADIUS, 2*BUTTON_RADIUS, 2*BUTTON_RADIUS);
-        ctx.strokeStyle = "rgba(0,0,0,1)";
-        ctx.strokeRect(x-BUTTON_RADIUS, y-BUTTON_RADIUS, 2*BUTTON_RADIUS, 2*BUTTON_RADIUS);
+        for( var tool in tools ) {
+            var
+            button = document.getElementById(tool),
+            ctx = button.getContext("2d");
+            
+            ctx.clearRect(0, 0, button.width, button.height);
+            
+            switch(tool) {
+                case "rubber":
+                    ctx.fillStyle = "rgba(255,255,255,1)";
+                    ctx.fillRect(x-BUTTON_RADIUS, y-BUTTON_RADIUS, 
+                                 2*BUTTON_RADIUS, 2*BUTTON_RADIUS);
+                    ctx.strokeStyle = "rgba(0,0,0,1)";
+                    ctx.strokeRect(x-BUTTON_RADIUS, y-BUTTON_RADIUS, 
+                                   2*BUTTON_RADIUS, 2*BUTTON_RADIUS);
+                    break;
+                    
+                case "brush":
+                    ctx.beginPath();
+                    ctx.arc(x, y, BUTTON_RADIUS, 0, 2*Math.PI);
+                    ctx.fill();
+                    break;
+                    
+                case "marker":
+                    ctx.beginPath();
+                    ctx.moveTo(x + BUTTON_RADIUS/3, y - BUTTON_RADIUS/3);
+                    ctx.lineTo(x - BUTTON_RADIUS/3, y + BUTTON_RADIUS/3);
+                    ctx.stroke();
+                    break;
+                    
+                case "pen":
+                    ctx.fillRect(x-BUTTON_RADIUS,y-BUTTON_RADIUS, 2*BUTTON_RADIUS, 2*BUTTON_RADIUS);
+                    break;
+                    
+                    
+            }
+        } 
+        
         
     }
     
-    function brushButton() {
 
-        var button = tools["brush"]["canvas"];
-        var ctx = button.getContext("2d");
-        
-        var x =  button.width/2;
-        var y =  button.height/2;
-
-        ctx.clearRect(0, 0, button.width, button.height);
-
-        ctx.beginPath();
-        ctx.arc(x, y, BUTTON_RADIUS, 0, 2*Math.PI);
-        ctx.fill();
-    }
-
-    function markerButton() {    
-
-        var button = tools["marker"]["canvas"];
-        var ctx = button.getContext("2d");
-        
-        var x =  button.width/2;
-        var y =  button.height/2;
-
-        ctx.lineWidth = BUTTON_RADIUS/10;
-
-        ctx.clearRect(0, 0, button.width, button.height);
-
-        ctx.beginPath();
-        ctx.moveTo(x + BUTTON_RADIUS/3, y - BUTTON_RADIUS/3);
-        ctx.lineTo(x - BUTTON_RADIUS/3, y + BUTTON_RADIUS/3);
-        ctx.stroke();
-
-    }
-
-    function penButton() {
-
-        var button = tools["pen"]["canvas"];
-        var ctx = button.getContext("2d");
-        
-        var x =  button.width/2;
-        var y =  button.height/2;
-
-        ctx.clearRect(0, 0, button.width, button.height);
-
-        ctx.fillRect(x-BUTTON_RADIUS,y-BUTTON_RADIUS, 2*BUTTON_RADIUS, 2*BUTTON_RADIUS);
-    }
-    
-    
-    
     function rubber(click) {
 
         var x = document.body.scrollLeft + click.clientX;
@@ -285,7 +268,6 @@ function init_module_tools() {
     
         "rubber": {
             
-            "button": rubberButton,
             "mousedown": rubber, 
             "drag": rubber,
             "show": showRubber
@@ -293,15 +275,13 @@ function init_module_tools() {
         },
         "brush": {
             
-            "button": brushButton,
             "mousedown": brush, 
             "drag": brushDragged,
             "show": showBrush
             
         },
         "marker": {
-            
-            "button": markerButton,
+
             "mousedown": marker, 
             "drag": markerDragged,
             "show": showMarker
@@ -309,7 +289,6 @@ function init_module_tools() {
         },
         "pen": {
             
-            "button": penButton,
             "mousedown": pen, 
             "drag": penDragged,
             "show": showPen
@@ -318,6 +297,7 @@ function init_module_tools() {
 
     };
     
+    /*
     function update() {
     
         var style = "rgb(" + color + ")";
@@ -327,7 +307,7 @@ function init_module_tools() {
         demo_context.strokeStyle = style;
     
     }
-    
+    */
     
     (function() {
         
@@ -356,9 +336,9 @@ function init_module_tools() {
             tool_name = evt.target.id;
             tool = tools[tool_name];
             
-            mousedown = tool["mousedown"];
-            drag = tool["drag"];
-            show = tool["show"];
+            for (var attr in tool) {
+                draw_stuff[attr] = tool[attr];
+            }
             
             show();
             
@@ -379,10 +359,10 @@ function init_module_tools() {
         
         
         tool = tools["brush"];
-        mousedown = tool["mousedown"];
-        drag = tool["drag"];
-        show = tool["show"];
-        update();
+        
+        for (var attr in tool) {
+            draw_stuff[attr] = tool[attr];
+        }
         
     })();
     

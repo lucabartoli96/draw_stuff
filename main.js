@@ -1,10 +1,14 @@
 
 
-var color = "0,0,0";
-var mousedown, drag, show;
-
-
 window.onload = function() {
-    init_module_tools();
-    init_module_paint();
+    
+    draw_stuff = {
+        "color": "0 , 0, 0",
+        "mousedown": null,
+        "drag": null,
+        "show": null
+    };
+    
+    init_module_tools(draw_stuff);
+    init_module_draw(draw_stuff);
 };

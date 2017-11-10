@@ -30,10 +30,6 @@ header
     margin-left: 7px;
 }
 
-#ui_controls img:hover {
-    filter: brightness(100);
-}
-
 #save {
     width: 40px;
 }
@@ -83,15 +79,38 @@ section {
 */
 
 
+#save_dropdown {
+    position: fixed;
+    left: 38px;
+    top: 40px;
+    border: solid;
+    width: 30%;
+    height: 50%;
+}
+
+#save_dropdown form {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+input[name=file_name] {
+    border-style: ridge;
+}
+
 
 #saved
 {
-    display: none;
     position: absolute;
-    top: 700px;
-    left: 20px;
-    font-size: 20px;
-    font-family: monospace;
+    left: 10px;
+    top: 30px;
+}
+
+#saved img {
+    position: relative;
+    width: 1%;
+    padding-top: 100%;
+    margin-left: 10px;
 }
 
 /*

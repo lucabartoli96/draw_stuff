@@ -1,6 +1,6 @@
 
 
-function init_module_tools(draw_stuff) {
+function init_module_tools(draw_stuff, LOG) {
 
     var BUTTON_RADIUS = 10;
     
@@ -88,7 +88,7 @@ function init_module_tools(draw_stuff) {
     }
 
     function marker(click) {    
-
+        
         var x = document.body.scrollLeft + click.clientX  - canvasLeft;
         var y = document.body.scrollTop + click.clientY  -  canvasTop;
 
@@ -103,7 +103,7 @@ function init_module_tools(draw_stuff) {
     }
 
     function pen(click) {
-
+        
         var x = document.body.scrollLeft + click.clientX  - canvasLeft;
         var y = document.body.scrollTop + click.clientY  -  canvasTop;
 
@@ -113,9 +113,9 @@ function init_module_tools(draw_stuff) {
         context.fillRect(x-radius,y-radius, 2*radius, 2*radius);
     }
 
-
+    
     function brushDragged(click) {
-
+        
         var x = document.body.scrollLeft + click.clientX  - canvasLeft;
         var y = document.body.scrollTop + click.clientY  -  canvasTop;
 
@@ -137,17 +137,26 @@ function init_module_tools(draw_stuff) {
     }
 
     function markerDragged(click) {
-
+        
         var x = document.body.scrollLeft + click.clientX  - canvasLeft;
         var y = document.body.scrollTop + click.clientY  -  canvasTop;
 
+        var incline =  radius/3;
+        
         context.beginPath();
-        context.moveTo(latter_x + radius/3, latter_y - radius/3);
-        context.lineTo(latter_x - radius/3, latter_y + radius/3);
-        context.lineTo(x - radius/3, y + radius/3);
-        context.lineTo(x + radius/3, y - radius/3);
-        context.lineTo(latter_x + radius/3, latter_y - radius/3);
+        context.moveTo(latter_x + incline, latter_y - incline);
+        context.lineTo(latter_x - incline, latter_y + incline);
+        context.lineTo(x - incline, y + incline);
+        context.lineTo(x + incline, y - incline);
+        context.lineTo(latter_x + incline, latter_y - incline);
         context.fill();
+        
+        var adj = 1;
+        
+        context.beginPath();
+        context.moveTo(x + incline - adj, y - incline + adj);
+        context.lineTo(x - incline + adj, y + incline - adj);
+        context.stroke();
 
         latter_x = x;
         latter_y = y;
@@ -155,12 +164,12 @@ function init_module_tools(draw_stuff) {
     }
 
     function penDragged(click) {
-
+        
         var x = document.body.scrollLeft + click.clientX  - canvasLeft;
         var y = document.body.scrollTop + click.clientY  -  canvasTop;
 
         var a = x, b = y;
-
+        
         if(latter_x > x)
         {
             var swap = latter_x;
@@ -172,9 +181,9 @@ function init_module_tools(draw_stuff) {
             y= swap;
         }
 
-        var x_1, y_1,x_2, y_2,x_3, y_3,x_4, y_4;
+        var x_1, y_1, x_2, y_2, x_3, y_3, x_4, y_4;
 
-        if(latter_y - radius >= y - radius)
+        if(latter_y >= y)
         {
             x_1 = latter_x - radius;
             y_1 = latter_y - radius;
@@ -196,14 +205,15 @@ function init_module_tools(draw_stuff) {
             x_4 = x + radius;
             y_4 = y - radius;
         }
-
+        
         context.beginPath();
         context.moveTo(x_1,y_1);
         context.lineTo(x_2,y_2);
         context.lineTo(x_3,y_3);
         context.lineTo(x_4,y_4);
-        context.lineTo(x_1,y_1);
+        context.closePath();
         context.fill();
+        context.stroke();
         context.fillRect(x-radius,y-radius, 2*radius, 2*radius);
 
         latter_x = a;
@@ -295,7 +305,7 @@ function init_module_tools(draw_stuff) {
             "drag": penDragged,
             "show": showPen
             
-        },
+        }
 
     };
     
@@ -316,9 +326,11 @@ function init_module_tools(draw_stuff) {
         document.getElementsByName("radius")[0]
         .addEventListener("input",
             function(evt) {
-                radius = evt.target.value;
+                radius = parseInt(evt.target.value);
+                evt.stopPropagation();
                 draw_stuff["show"]();
-            }
+            },
+            true
         );
         
         
@@ -337,7 +349,7 @@ function init_module_tools(draw_stuff) {
         
         var tools_span = document.getElementById("tools");
         
-        for( var tool_name in tools) {
+        for(var tool_name in tools) {
             var button = document.createElement("canvas");
             button.id = tool_name;
             button.height = button.width = 35;

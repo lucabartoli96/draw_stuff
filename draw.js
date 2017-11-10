@@ -1,6 +1,6 @@
 
 
-function init_module_draw(draw_stuff) {
+function init_module_draw(draw_stuff, LOG) {
 
     var 
     canvas = document.getElementById("main_canvas"),
@@ -11,8 +11,8 @@ function init_module_draw(draw_stuff) {
     just_cleared = true,
     dragging = false,
     canvasLeft = canvas.getBoundingClientRect().left,
-    canvasTop = canvas.getBoundingClientRect().top;
-    
+    canvasTop = canvas.getBoundingClientRect().top,
+    counter = 1;
     
     function saveStep() {
     
@@ -49,28 +49,33 @@ function init_module_draw(draw_stuff) {
         };
 
     }
+    
+    function downloadURI(uri, name) {
+        var link = document.createElement("a");
+        link.download = name;
+        link.href = uri;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        delete link;
+    }
 
     function thumbNails(image) {
 
         var div = document.getElementById("saved");
 
-        var link = document.createElement("a");
-        link.href = image;
-        link.download = "image";
-
-
         var img = document.createElement("img");
         img.src = image;
+        img.setAttribute("data-name", "image" + img_counter);
 
+        
         img.addEventListener("click" , function (evt) {
-
-            var link = evt.target.parentElement;
-            link.download = prompt("Please, enter title: ", "title...");
+            
+            
 
         });
 
         link.appendChild(img);
-        div.appendChild(link);
     }
     
     
@@ -96,8 +101,6 @@ function init_module_draw(draw_stuff) {
             draw_stuff["mousedown"](evt);
             evt.target.addEventListener("mousemove", draw_stuff["drag"]);
             dragging = true;
-            
-            demo.setAttribute("style", "display: none");
 
         });
 
@@ -106,8 +109,6 @@ function init_module_draw(draw_stuff) {
            evt.target.removeEventListener("mousemove", draw_stuff["drag"]);
            saveStep();
            dragging = false;
-            
-           demo.setAttribute("style", "display: auto");
 
         };
 

@@ -1,0 +1,125 @@
+
+
+#ui_controls {
+    position: absolute;
+    background-color: inherit;
+    left: var(--section_width);
+    height: var(--header_height);
+    top: 1%;
+}
+
+
+#ui_controls button:not(#save_dropdown_button) {
+    position: absolute;
+    background-color: inherit;
+    color: black;
+    margin-left: 7px;
+    border-style: none;
+    font-size: 24px;
+    top: 50%;                         
+    transform: translate(0, -50%);
+}
+
+
+#save {
+    left: 0;
+}
+
+#save_dropdown_button {
+	position: absolute;
+	background-color: transparent;
+	left: 36px;
+	color: black;
+	border-style: none;
+	font-size: 10pt;
+	top: 50%;
+	transform: translate(0, -50%);
+	width: 1px;
+}
+
+
+#undo {
+    left: 50px;
+}
+
+#redo {
+    left: 90px;
+}
+
+
+#clear {
+    left: 130px;
+}
+
+#ui_controls button:hover:not(#save_dropdown_button) {
+    font-size: 30px;
+}
+
+#tools {
+    position: absolute;
+    height: var(--header_height);
+    top: var(--header_height);
+}
+
+#tools canvas {
+    position: relative;
+    left: 50%;                         
+    transform: translate(-50%, 0);
+}
+
+
+#save_dropdown {
+    display: none;
+    position: fixed;
+    left: var(--section_width);
+    top: var(--header_height);
+    background-color: white;
+    border: solid;
+    width: 30%;
+    height: 50%;
+}
+
+#save_dropdown form {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 7%;
+}
+
+
+input[name=file_name] {
+    border-style: solid;
+    border-width: 1px;
+    width: 80%;
+    height: 100%;
+    font-size: 12pt;
+}
+
+button[name=download] {
+    border-style: none;
+    background-color: white;
+    font-size: 16pt;
+}
+
+
+#saved
+{
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 50px;
+    bottom: 15px;
+    overflow: scroll;
+
+}
+
+#saved img {
+    position: relative;
+    margin-left: 10px;
+    box-shadow: 5px 5px 2px grey;
+}
+
+.selected {
+    box-shadow: 5px 5px 2px black;
+}

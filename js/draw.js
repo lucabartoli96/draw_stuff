@@ -3,6 +3,9 @@
 function init_module_draw(draw_stuff, LOG) {
 
     var 
+    THUMBNAILS_WIDTH = 60;
+    
+    var 
     canvas = document.getElementById("main_canvas"),
     context = canvas.getContext("2d"),
     demo = document.getElementsByTagName("nav")[0],
@@ -10,9 +13,10 @@ function init_module_draw(draw_stuff, LOG) {
     steps = [],
     just_cleared = true,
     dragging = false,
+    save_dropdown = document.getElementById("save_dropdown"),
     canvasLeft = canvas.getBoundingClientRect().left,
     canvasTop = canvas.getBoundingClientRect().top,
-    counter = 1;
+    selected_image = null;
     
     function saveStep() {
     
@@ -66,16 +70,30 @@ function init_module_draw(draw_stuff, LOG) {
 
         var img = document.createElement("img");
         img.src = image;
-        img.setAttribute("data-name", "image" + img_counter);
+        
+        var ratio = img.height/img.width;
+        
+        img.width = THUMBNAILS_WIDTH;
+        img.height = THUMBNAILS_WIDTH*ratio;
+        
 
+        if (! img.width * img.height) {
+            return;
+        }
+        
         
         img.addEventListener("click" , function (evt) {
             
+            if (selected_image) {
+                selected_image.className = "";    
+            }
             
-
+            evt.target.className = "selected";
+            selected_image = img;
+            
         });
 
-        link.appendChild(img);
+        div.appendChild(img);
     }
     
     
@@ -144,6 +162,35 @@ function init_module_draw(draw_stuff, LOG) {
             var image_url = canvas.toDataURL();
             thumbNails(image_url);
 
+        });
+        
+        
+        document.getElementsByTagName("form")[0]
+        .addEventListener("click", function(evt) {
+           
+            evt.preventDefault();
+            
+            if (selected_image) {
+                var 
+                URI = selected_image.href,
+                input = document.getElementsByName("file_name")[0],
+                name = input.value;
+            
+                if (value) {
+                    downloadURI(URI, name);
+                }
+            } 
+            
+        });
+        
+        
+        document.getElementById("save_dropdown_button")
+        .addEventListener("click", function() {
+            if (save_dropdown.style.display == "none") {
+                save_dropdown.style.display = "block";
+            } else {
+                save_dropdown.style.display = "none";
+            }
         });
 
 

@@ -10,11 +10,12 @@
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <link rel="stylesheet" type="text/css" href="main.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/main.css">
         
-        <script src="tools.js"> </script>
-        <script src="draw.js"> </script>
-        <script src="main.js"> </script>
+        <script src="js/tools.js"> </script>
+        <script src="js/draw.js"> </script>
+        <script src="js/main.js"> </script>
         
     </head>
     <body>
@@ -24,12 +25,11 @@
         
         <header>
             <span id="ui_controls">
-                <img id="save" class="steps" src="icons/save.png"/>
-                <img id="undo" class="steps" src="icons/undo.png"/> 
-                <img id="redo" class="steps" src="icons/redo.png"/> 
-                <img id="clear"  class="steps" src="icons/clear.png"/> 
-            </span>
-            <span id="tools">
+                <button id="save" class="steps"><i class="fa fa-floppy-o"></i></button>
+                <button id="save_dropdown_button" class="dropdown_button">▾</button>
+                <button id="undo" class="steps"><i class="fa fa-undo"></i></button>
+                <button id="redo" class="steps"><i class="fa fa-repeat"></i></button>
+                <button id="clear" class="steps"><i class="fa fa-file-o"></i></button>
             </span>
             <p id="log">
             </p>
@@ -37,12 +37,14 @@
         
         
         <section>
+            <span id="tools">
+            </span>
         </section>
         
         <div id="save_dropdown">
             <form>
-                <input name="file_name" type="text" />
-                <input name="download" type="submit" value="download"/>
+                <input name="file_name" type="text" placeholder="inserire titolo..."/>
+                <button name="download"> <i class="fa fa-download"></i></button>
             </form>
             <div id="saved">
             </div>

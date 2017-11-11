@@ -1,0 +1,43 @@
+:root {
+    --header_height: 40px;
+    --section_width: 40px;
+}
+
+
+html, body
+{
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
+
+header, section {
+    background-color:#4c4743;
+}
+
+
+header
+{
+    position: fixed;
+    top:0;
+    left: 0;
+    height: var(--header_height);
+    width: 100%;
+}
+
+
+section {
+    position: fixed;
+    top: 35px;
+    height: 100%;
+    width: var(--section_width);
+}
+
+
+#main_canvas
+{
+    position: fixed;
+    top:var(--header_height);
+    left:var(--section_width);
+}
